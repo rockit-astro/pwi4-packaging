@@ -9,4 +9,3 @@ all:
 	${RPMBUILD} -ba pwi4.spec
 	mv build/noarch/*.rpm .
 	rm -rf build
-
