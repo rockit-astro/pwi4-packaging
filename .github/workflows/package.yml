@@ -1,0 +1,41 @@
+name: RPM Packaging
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  linux:
+    name: RPM Packaging
+    runs-on: ubuntu-20.04
+    container: centos:centos7
+    steps:
+      - name: Install Dependencies
+        run: |
+          # CentOS 7's git version is too old for the checkout action so fetch from ius instead
+          yum -y install https://repo.ius.io/ius-release-el7.rpm https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
+          # Mono is also required
+          rpmkeys --import "http://pool.sks-keyservers.net/pks/lookup?op=get&search=0x3fa7e0328081bff6a14da29aa6a19b38d3d831ef"
+          su -c 'curl https://download.mono-project.com/repo/centos7-stable.repo | tee /etc/yum.repos.d/mono-centos7-stable.repo'
+          yum -y install git224 rpm-build rpm-sign rsync make mono
+
+      - name: Clone Repository
+        uses: actions/checkout@v2
+
+      - name: Clone Package Repository
+        uses: actions/checkout@v2
+        with:
+          repository: warwick-one-metre/centos-packages
+          token: ${{ secrets.DEPLOY_TOKEN }}
+          path: centos-packages
+
+      - name: Package RPM
+        run:
+          make
+
+      - name: Push Packages
+        env:
+          RPM_SIGNING_KEY: ${{ secrets.RPM_SIGNING_KEY }}
+        run: |
+          centos-packages/sign-and-push-packages.sh *.rpm
