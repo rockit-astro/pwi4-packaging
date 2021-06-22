@@ -16,7 +16,6 @@ jobs:
           # CentOS 7's git version is too old for the checkout action so fetch from ius instead
           yum -y install https://repo.ius.io/ius-release-el7.rpm https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
           # Mono is also required
-          rpmkeys --import "http://pool.sks-keyservers.net/pks/lookup?op=get&search=0x3fa7e0328081bff6a14da29aa6a19b38d3d831ef"
           su -c 'curl https://download.mono-project.com/repo/centos7-stable.repo | tee /etc/yum.repos.d/mono-centos7-stable.repo'
           yum -y install git224 rpm-build rpm-sign rsync make mono
 
