@@ -7,5 +7,6 @@ A tar bundle for 4.0.10 was not available at the time of latest update, so we re
 Binary patches are applied to improve system integration:
 
 * The `~/'Planewave Instruments'` data directory is changed to `/var/opt/pwi4`.
+* A mount.ha_hours line is added to the /status http response.
 
 The package depends on a recent version of mono, which can be obtained by adding the upstream repository https://www.mono-project.com/download/stable/#download-lin-centos

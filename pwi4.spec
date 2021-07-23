@@ -30,6 +30,11 @@ rm %{buildroot}/run-pwi4
 csc %{_sourcedir}/patch_config_directory.cs -warn:4 -warnaserror -r:"$(ls /usr/lib/mono/gac/Mono.Cecil/0.11.*/Mono.Cecil.dll)" -out:"patch.exe"
 mono --debug patch.exe %{buildroot}/opt/pwi4/PWLib.dll %{buildroot}/opt/pwi4/PWLib.dll.temp
 mv %{buildroot}/opt/pwi4/PWLib.dll.temp %{buildroot}/opt/pwi4/PWLib.dll
+
+# Add mount.ha_hours to the /status output
+csc %{_sourcedir}/patch_add_ha_status.cs -warn:4 -warnaserror -r:"$(ls /usr/lib/mono/gac/Mono.Cecil/0.11.*/Mono.Cecil.dll)" -out:"patch.exe"
+mono --debug patch.exe %{buildroot}/opt/pwi4/PWI4.exe %{buildroot}/opt/pwi4/PWLib.dll %{buildroot}/opt/pwi4/PWI4.exe.tmp
+mv %{buildroot}/opt/pwi4/PWI4.exe.tmp %{buildroot}/opt/pwi4/PWI4.exe
 rm patch.exe
 
 %{__install} %{_sourcedir}/pwi4 %{buildroot}%{_bindir}
