@@ -27,9 +27,8 @@ mv %{buildroot}/app %{buildroot}/opt/pwi4
 rm %{buildroot}/run-pwi4
 
 # Patch "~/PlaneWave Instruments" data directory to /var/opt/pwi4
-csc %{_sourcedir}/patch.cs -warn:4 -warnaserror -r:"$(ls /usr/lib/mono/gac/Mono.Cecil/0.11.*/Mono.Cecil.dll)" -out:"patch.exe"
-ls %{buildroot}/opt/pwi4/PWLib.dll
-mono --debug patch.exe %{buildroot}/opt/pwi4/PWLib.dll %{buildroot}/opt/pwi4/PWLib.dll.temp /var/opt/pwi4
+csc %{_sourcedir}/patch_config_directory.cs -warn:4 -warnaserror -r:"$(ls /usr/lib/mono/gac/Mono.Cecil/0.11.*/Mono.Cecil.dll)" -out:"patch.exe"
+mono --debug patch.exe %{buildroot}/opt/pwi4/PWLib.dll %{buildroot}/opt/pwi4/PWLib.dll.temp
 mv %{buildroot}/opt/pwi4/PWLib.dll.temp %{buildroot}/opt/pwi4/PWLib.dll
 rm patch.exe
 
