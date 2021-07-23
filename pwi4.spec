@@ -2,7 +2,7 @@
 %global __requires_exclude_from ^/opt/*
 
 Name:      pwi4
-Version:   4.0.9b21
+Version:   4.0.10
 Release:   0
 Url:       https://github.com/warwick-one-metre/pwi4
 Summary:   PlaneWave telescope control software repackaged for CentOS.
@@ -22,7 +22,7 @@ mkdir -p %{buildroot}%{_bindir}
 mkdir -p %{buildroot}/opt
 mkdir -p %{buildroot}/var/opt/pwi4
 
-tar xf %{_sourcedir}/pwi-4.0.9beta21.tar.gz -C %{buildroot} --strip-components=1
+tar xf %{_sourcedir}/pwi-4.0.10.tar.gz -C %{buildroot} --strip-components=1
 mv %{buildroot}/app %{buildroot}/opt/pwi4
 rm %{buildroot}/run-pwi4
 
