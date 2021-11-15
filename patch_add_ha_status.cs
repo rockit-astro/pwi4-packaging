@@ -27,14 +27,14 @@ namespace PWI4Patcher
 
 			var ilProcessor = statusMethod.Body.GetILProcessor();
 
-			// The insertion point is found by printing the IL and identifying the ldloc.2 instruction
+			// The insertion point is found by printing the IL and identifying the ldloc.s "V_4" instruction
 			// at the start of the mount.target_ra_apparent_hours logic
 			//
 			// var i = 0;
 			// foreach (var instruction in statusMethod.Body.Instructions)
 			//      Console.WriteLine($"{i++} {instruction.OpCode} \"{instruction.Operand}\"");
 			//
-			var insertionPoint = ilProcessor.Body.Instructions.Skip(154).First();
+			var insertionPoint = ilProcessor.Body.Instructions.Skip(182).First();
 			ilProcessor.InsertBefore(insertionPoint, ilProcessor.Create(OpCodes.Ldstr, "mount.ha_hours"));
 			ilProcessor.InsertBefore(insertionPoint, ilProcessor.Create(OpCodes.Ldloc_2));
 			ilProcessor.InsertBefore(insertionPoint, ilProcessor.Create(OpCodes.Ldflda, teleHAField));
