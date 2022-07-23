@@ -8,16 +8,16 @@ on:
 jobs:
   linux:
     name: RPM Packaging
-    runs-on: ubuntu-20.04
-    container: centos:centos7
+    runs-on: ubuntu-22.04
+    container: rockylinux:9
     steps:
       - name: Install Dependencies
         run: |
-          # CentOS 7's git version is too old for the checkout action so fetch from ius instead
-          yum -y install https://repo.ius.io/ius-release-el7.rpm https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
-          # Mono is also required
-          su -c 'curl https://download.mono-project.com/repo/centos7-stable.repo | tee /etc/yum.repos.d/mono-centos7-stable.repo'
-          yum -y install git224 rpm-build rpm-sign rsync make mono
+          cat /etc/redhat-release
+          yum -y install git rpm-build rpm-sign rsync make
+          su -c 'curl https://download.mono-project.com/repo/centos8-stable.repo | tee /etc/yum.repos.d/mono-centos8-stable.repo'
+          # mono packages are signed with an insecure sha1 key, which is rejected by Rocky 9
+          yum -y --nogpgcheck install mono
 
       - name: Clone Repository
         uses: actions/checkout@v2
@@ -25,9 +25,9 @@ jobs:
       - name: Clone Package Repository
         uses: actions/checkout@v2
         with:
-          repository: warwick-one-metre/centos-packages
+          repository: warwick-one-metre/rocky-packages
           token: ${{ secrets.DEPLOY_TOKEN }}
-          path: centos-packages
+          path: rocky-packages
 
       - name: Package RPM
         run:
@@ -37,4 +37,4 @@ jobs:
         env:
           RPM_SIGNING_KEY: ${{ secrets.RPM_SIGNING_KEY }}
         run: |
-          centos-packages/sign-and-push-packages.sh *.rpm
+          rocky-packages/sign-and-push-packages.sh *.rpm
