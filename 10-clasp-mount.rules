@@ -1,2 +1,0 @@
-KERNEL=="ttyACM[0-9]*", ATTRS{idVendor}=="1cbe", ATTRS{idProduct}=="0267", ATTRS{bInterfaceNumber}=="00" SYMLINK="mount-ra", MODE="0666"
-KERNEL=="ttyACM[0-9]*", ATTRS{idVendor}=="1cbe", ATTRS{idProduct}=="0267", ATTRS{bInterfaceNumber}=="02" SYMLINK="mount-dec", MODE="0666"

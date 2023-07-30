@@ -20,21 +20,22 @@ jobs:
           yum -y --nogpgcheck install mono
 
       - name: Clone Repository
-        uses: actions/checkout@v2
-
-      - name: Clone Package Repository
-        uses: actions/checkout@v2
-        with:
-          repository: warwick-one-metre/rocky-packages
-          token: ${{ secrets.DEPLOY_TOKEN }}
-          path: rocky-packages
+        uses: actions/checkout@v3
 
       - name: Package RPM
         run:
           make
 
+      - name: Clone Package Repository
+        uses: actions/checkout@v3
+        with:
+          repository: rockit-astro/packages
+          token: ${{ secrets.DEPLOY_TOKEN }}
+          path: packages
+
       - name: Push Packages
         env:
           RPM_SIGNING_KEY: ${{ secrets.RPM_SIGNING_KEY }}
-        run: |
-          rocky-packages/sign-and-push-packages.sh *.rpm
+        run:
+          packages/sign-and-push-packages.sh *.rpm
+

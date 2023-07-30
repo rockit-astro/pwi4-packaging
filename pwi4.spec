@@ -3,18 +3,16 @@
 
 Name:      pwi4
 Version:   4.0.13
-Release:   1
-Url:       https://github.com/warwick-one-metre/pwi4
-Summary:   PlaneWave telescope control software repackaged for CentOS.
+Release:   0
+Url:       https://github.com/rockit-astro/pwi4
+Summary:   PlaneWave telescope control software.
 License:   Proprietary
 Group:     Unspecified
 BuildArch: noarch
-Requires:  mono, mono-basic, libcanberra-gtk2
-BuildRequires: mono
+Requires:  mono mono-basic libcanberra-gtk2
 
 %description
 
-PlaneWave telescope control software repackaged for CentOS.
 
 %build
 
