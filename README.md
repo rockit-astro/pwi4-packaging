@@ -1,7 +1,7 @@
 PlaneWave Instrument's PWI4 control software repackaged for Rocky Linux.
 
 Planewave host Windows installers and Linux tar bundles at https://planewave.com/files/software/PWI4/
-A tar bundle for the 4.0.13 Linux release is mirrored to ensure future availablility.
+A tar bundle for the 4.1.4 Linux release is mirrored to ensure future availablility.
 
 Binary patches are applied to improve system integration:
 
