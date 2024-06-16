@@ -34,6 +34,12 @@ csc %{_sourcedir}/patch_add_homed_status.cs -warn:4 -warnaserror -r:"$(ls /usr/l
 mono --debug patch.exe %{buildroot}/opt/pwi4/PWI4.exe.tmp /usr/lib/mono/4.5/mscorlib.dll %{buildroot}/opt/pwi4/PWI4.exe
 rm patch.exe
 
+# Restore ability to call /mount/enable?axis=-1 and /mount/disable?axis=-1 to toggle both axes on/off
+csc %{_sourcedir}/patch_enable_both_axes.cs -warn:4 -warnaserror -r:"$(ls /usr/lib/mono/gac/Mono.Cecil/0.11.*/Mono.Cecil.dll)" -out:"patch.exe"
+mono --debug patch.exe %{buildroot}/opt/pwi4/PWI4.exe %{buildroot}/opt/pwi4/PWI4.exe.tmp
+rm patch.exe
+
+mv %{buildroot}/opt/pwi4/PWI4.exe.tmp %{buildroot}/opt/pwi4/PWI4.exe
 %{__install} %{_sourcedir}/pwi4 %{buildroot}%{_bindir}
 
 %files
