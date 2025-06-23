@@ -1,0 +1,7 @@
+[rockit]
+name=rockit Observatory Packages
+baseurl=https://rockit-astro.github.io/el10/
+enabled=1
+gpgcheck=1
+gpgkey=https://rockit-astro.github.io/el10/RPM-GPG-KEY
+priority=98

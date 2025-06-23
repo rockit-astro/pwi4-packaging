@@ -1,0 +1,41 @@
+name: "Packaging (el10)"
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  build:
+    name: Build Package
+    runs-on: ubuntu-24.04
+    container: rockylinux/rockylinux:10-minimal
+    steps:
+      - name: Install Dependencies
+        run: |
+          microdnf -y install dnf epel-release
+          /usr/bin/crb enable
+          dnf -y install git gpg rpm-build rpm-sign make
+
+      - name: Clone Repository
+        uses: actions/checkout@v4
+
+      - name: Install mono
+        run: |
+          cp rockit.repo /etc/yum.repos.d/
+          dnf -y install mono-core
+
+      - name: Package RPM
+        run: make
+
+      - name: Clone Package Repository
+        uses: actions/checkout@v4
+        with:
+          repository: rockit-astro/el10
+          token: ${{ secrets.DEPLOY_TOKEN }}
+          path: packages
+
+      - name: Sign and Push Packages
+        env:
+          RPM_SIGNING_KEY: ${{ secrets.RPM_SIGNING_KEY }}
+        run: packages/sign-and-push-packages.sh *.rpm

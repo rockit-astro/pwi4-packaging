@@ -1,4 +1,4 @@
-name: RPM Packaging
+name: "Packaging (el9)"
 
 on:
   push:
@@ -17,7 +17,7 @@ jobs:
           yum -y install git rpm-build rpm-sign rsync make
           su -c 'curl https://download.mono-project.com/repo/centos8-stable.repo | tee /etc/yum.repos.d/mono-centos8-stable.repo'
           # mono packages are signed with an insecure sha1 key, which is rejected by Rocky 9
-          yum -y --nogpgcheck install mono
+          yum -y --nogpgcheck install mono-core
 
       - name: Clone Repository
         uses: actions/checkout@v3
